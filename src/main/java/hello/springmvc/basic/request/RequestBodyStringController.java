@@ -20,7 +20,10 @@ import java.nio.charset.StandardCharsets;
 public class RequestBodyStringController {
 
     @RequestMapping(value = "/request-body-string-v1", method = RequestMethod.POST)
-    public void requestBodyStringV1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void requestBodyStringV1(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
         String messageBody = StreamUtils.copyToString(request.getInputStream(), StandardCharsets.UTF_8);
         log.info("messageBody={}", messageBody);
         response.getWriter().write("ok");
@@ -30,8 +33,8 @@ public class RequestBodyStringController {
     public void requestBodyStringV2(
             InputStream inputStream,
             OutputStream outputStream,
-            Writer responseWriter,
-            Reader reader
+            Reader reader,
+            Writer responseWriter
     ) throws IOException {
         String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         log.info("messageBody={}", messageBody);
@@ -39,7 +42,9 @@ public class RequestBodyStringController {
     }
 
     @RequestMapping(value = "/request-body-string-v3", method = RequestMethod.POST)
-    public HttpEntity<String> requestBodyStringV3(HttpEntity<String> httpEntity) {
+    public HttpEntity<String> requestBodyStringV3(
+            HttpEntity<String> httpEntity
+    ) {
         String messageBody = httpEntity.getBody();
         log.info("messageBody={}", messageBody);
         return new HttpEntity<>("ok");
@@ -47,7 +52,9 @@ public class RequestBodyStringController {
 
     @ResponseBody
     @RequestMapping(value = "/request-body-string-v4", method = RequestMethod.POST)
-    public String requestBodyStringV4(@RequestBody String messageBody) {
+    public String requestBodyStringV4(
+            @RequestBody String messageBody
+    ) {
         log.info("messageBody={}", messageBody);
         return "ok";
     }
